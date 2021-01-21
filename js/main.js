@@ -87,10 +87,10 @@ function initControl(src, array, manMode) {
             images.style.left = (parseInt(images.style.left.replace('%', '')) + 100) + '%';
         }
     });
-        
+
     right.addEventListener('click', function() {
         if(images.style.left == '-' + ((files.length - 1) * 100) + '%') {
-    }
+        }
         else {
             images.style.left = (images.style.left.replace('%', '') - 100) + '%';
         }
