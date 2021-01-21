@@ -17,15 +17,33 @@ function getParentDir(src) {
     }
     return parentDir;
 }
+
+/**
+ * only works with auto-created index-files from webserver
+ * @param {string} src source-folder of pictures 
+ */
 function listFiles(src) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", src);
-    xhr.responseType = "document";
-    xhr.onload = function(response) {
-        list = xhr.response.querySelectorAll("tr");
-        list2 = [];
-        for(let obj of list) {
-            list2.push(obj.querySelector("a").href);
+    let xhr = new XMLHttpRequest();
+    let dataList = [];
+    
+    xhr.open("GET", src, false);
+    xhr.send();
+    let dummyDom = document.createElement('html');
+    dummyDom.innerHTML = xhr.response;
+    let trList = dummyDom.querySelectorAll("tr");
+    console.log("Dateien in " + src + ":");
+    for(let obj of trList) {
+        if(obj.querySelector("a[href]") != null) { 
+            fileName = obj.querySelector("a[href]").href;
+            fileName = fileName.substring(fileName.length, fileName.lastIndexOf('/') + 1);
+            if(fileName.length != 0 && !fileName.includes("?C=N;O=D") && fileName !== getParentDir(src) && fileName.href !== src) {
+                dataList.push(src + fileName);
+                console.log(fileName);
+            }
+        }
+    }
+    return dataList;
+}
         }
         console.log(list);
         
