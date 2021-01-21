@@ -1,5 +1,7 @@
-var img     = document.getElementById('img');
-var files;
+var imgages = document.getElementById('images');
+var img0    = document.getElementById('img0');
+var left    = document.getElementById('left');
+var right   = document.getElementById('right');
 
 //Not working yet
 function listFiles(src) {
