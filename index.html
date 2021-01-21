@@ -17,9 +17,9 @@
         <meta id="description" name="description" content="Img-Slider">
         <script>
             const myParams = new URLSearchParams(window.location.search);
-            const src = myParams.get('src') !=  null ? myParams.get('src') : './media/test.mp3';
-            const dl = myParams.get('dl') != null ? myParams.get('dl') : false;
+            const src = myParams.get('src') !=  null ? myParams.get('src') : null;
             const type = myParams.get('t') != null ? myParams.get('t') : '1';
+            const pics = myParams.get('pics') != null ? myParams.get('pics') : null;
             document.getElementById('style').setAttribute('href', './css/' + type + '.css');
         </script>
     </head>
@@ -36,6 +36,6 @@
     </body>
     <script src="./js/main.js"></script>
     <script>
-        listFiles("https://kriebel.ddnsfree.com/mediaplayer/img/media");
+        initControl('./media/', [], false);
     </script>
 </html>
