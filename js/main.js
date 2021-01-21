@@ -60,9 +60,39 @@ function filterImages(array) {
     }
     return newArray;
 }
-        }
-        console.log(list);
-        
+
+/**
+ * 
+ * @param {string} src source-folder of pictures, only works with auto-created index-files from webserver (Available under manMode false)
+ * @param {string[]} array array of picture-urls (Available under manMode true)
+ * @param {boolean} manMode specifies manual-mode of picture-url collection
+ */
+function initControl(src, array, manMode) {
+    let files = filterImages(manMode ? array : listFiles(src));
+    imgages.style.width = (files.length * 100) + '%';
+    img0.remove();
+    
+    for(i = 0; i < files.length; i++) {
+        img = document.createElement('img');
+        img.src = files[i];
+        img.setAttribute('alt', 'Image can\'t be displayed');
+        img.classList.add('img');
+        imgages.appendChild(img);
     }
-    xhr.send();
+
+    left.addEventListener('click', function() {
+        if(images.style.left == "0%") {
+        }
+        else {
+            images.style.left = (parseInt(images.style.left.replace('%', '')) + 100) + '%';
+        }
+    });
+        
+    right.addEventListener('click', function() {
+        if(images.style.left == '-' + ((files.length - 1) * 100) + '%') {
+    }
+        else {
+            images.style.left = (images.style.left.replace('%', '') - 100) + '%';
+        }
+    });
 }
