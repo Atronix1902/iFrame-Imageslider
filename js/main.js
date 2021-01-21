@@ -44,6 +44,22 @@ function listFiles(src) {
     }
     return dataList;
 }
+
+/**
+ * 
+ * @param {string[]} array array of filename/-urls
+ * @returns {string[]} filtered string-array
+ */
+function filterImages(array) {
+    let knownTypes = ['jpeg', 'webp', 'gif', 'png', 'tiff', 'svg', 'pdf', 'bmp', 'ico'];
+    let newArray = [];
+    for(e of array) {
+        if(knownTypes.includes(e.substring(e.length, e.lastIndexOf('.') + 1).toLowerCase())) {
+           newArray.push(e); 
+        }
+    }
+    return newArray;
+}
         }
         console.log(list);
         
