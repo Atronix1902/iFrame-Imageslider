@@ -1,98 +1,107 @@
-var imgages = document.getElementById('images');
-var img0    = document.getElementById('img0');
-var left    = document.getElementById('left');
-var right   = document.getElementById('right');
+var imgages = document.getElementById('images');    //Container for images of the slider
+var img0    = document.getElementById('img0');      //Test-picture
+var left    = document.getElementById('left');      //Left-Button
+var right   = document.getElementById('right');     //Right-Button
 
 /**
- * 
+ * @author AtronixYT
  * @param {string} src source-url
  * @returns {string} parent-diretory related to src param example: ./test/ -> ./ | https://google.com/test/test/ -> https://google.com/test/ 
  */
 function getParentDir(src) {
-    let parentDir;
+    let parentDir;                                                                                                                      //Creates local var 
     if(src.charAt(src.length - 1) === '/') {
-        parentDir = src.substring(0, src.lastIndexOf('/')).substring(0, src.substring(0, src.lastIndexOf('/')).lastIndexOf('/') + 1);
+        parentDir = src.substring(0, src.lastIndexOf('/')).substring(0, src.substring(0, src.lastIndexOf('/')).lastIndexOf('/') + 1);   //Filters the parent-dir of directory
     } else {
-        parentDir = src.substring(0, src.lastIndexOf('/') + 1);
+        parentDir = src.substring(0, src.lastIndexOf('/') + 1);                                                                         //Filters the parent-dir of file
     }
-    return parentDir;
+    return parentDir;                                                                                                                   //Returns parent-dir
 }
 
 /**
  * only works with auto-created index-files from webserver
+ * @author AtronixYT
  * @param {string} src source-folder of pictures 
  */
 function listFiles(src) {
-    let xhr = new XMLHttpRequest();
-    let dataList = [];
+    let xhr = new XMLHttpRequest();     //New Request for getting dir-content
+    let dataList = [];                  //List of Data
     
-    xhr.open("GET", src, false);
-    xhr.send();
-    let dummyDom = document.createElement('html');
-    dummyDom.innerHTML = xhr.response;
-    let trList = dummyDom.querySelectorAll("tr");
-    console.log("Dateien in " + src + ":");
+    xhr.open("GET", src, false);        //Configures the request as a Get request at given location and synchronous 
+    xhr.send();                         //Sends request
+    
+    let dummyDom = document.createElement('html');      //Creates dummy HTML-Document for handling request answer
+    dummyDom.innerHTML = xhr.response;                  //Sets response as content of dummy
+    
+    let trList = dummyDom.querySelectorAll("tr");       //Gets all <tr>-tags of response
+    console.log("Dateien in " + src + ":");             //Information-Message
     for(let obj of trList) {
-        if(obj.querySelector("a[href]") != null) { 
-            fileName = obj.querySelector("a[href]").href;
-            fileName = fileName.substring(fileName.length, fileName.lastIndexOf('/') + 1);
-            if(fileName.length != 0 && !fileName.includes("?C=N;O=D") && fileName !== getParentDir(src) && fileName.href !== src) {
-                dataList.push(src + fileName);
-                console.log(fileName);
+        if(obj.querySelector("a[href]") != null) {          //If the given current object contains an <a>-tag object with given href-attribute
+            href = obj.querySelector("a[href]").href;       //Gets the href-value of the <a>-tag object of current object
+            if(href.charAt(href.length - 1) != '/') {       //Checks if last char is '/' (filters directories)
+                fileName = href.substring(href.length, href.lastIndexOf('/') + 1);  //cuts the path of the file and only keeps the filename 
+                if( fileName.length > 0 &&                  //If filename is longer than 0
+                    !fileName.includes("?C=N;O=D") &&       //If filename doesn't include buggy href
+                    fileName !== getParentDir(src) &&       //If filename isn't the same as the parent-dir
+                    fileName.href !== src)                  //If filename isn't the current dir
+                {                
+                    dataList.push(src + fileName);          //Adds the current filename and path to datalist
+                    console.log(fileName);                  //Logs the filename as found
+                }
             }
         }
     }
-    return dataList;
+    return dataList;                    //Returns the datalist
 }
 
 /**
- * 
+ * @author AtronixYT
  * @param {string[]} array array of filename/-urls
  * @returns {string[]} filtered string-array
  */
 function filterImages(array) {
-    let knownTypes = ['jpeg', 'webp', 'gif', 'png', 'tiff', 'svg', 'pdf', 'bmp', 'ico'];
-    let newArray = [];
-    for(e of array) {
-        if(knownTypes.includes(e.substring(e.length, e.lastIndexOf('.') + 1).toLowerCase())) {
-           newArray.push(e); 
+    let knownTypes = ['jpeg', 'webp', 'gif', 'png', 'tiff', 'svg', 'pdf', 'bmp', 'ico', 'jpg', 'raw', 'arw'];     //Creates a list of known image-types
+    let newArray = [];  //Creates array for filtered objects
+    for(e of array) {   //for every object as e of array                                        
+        if(knownTypes.includes(e.substring(e.length, e.lastIndexOf('.') + 1).toLowerCase())) {  //Filters the file-ending and compares it with all of the known ones if it is listed in known types it does something
+           newArray.push(e);    //Adds current object to filtered objects list
         }
     }
-    return newArray;
+    return newArray;    //returns filtered objects
 }
 
 /**
- * 
+ * @author AtronixYT
  * @param {string} src source-folder of pictures, only works with auto-created index-files from webserver (Available under manMode false)
  * @param {string[]} array array of picture-urls (Available under manMode true)
  * @param {boolean} manMode specifies manual-mode of picture-url collection
  */
 function initControl(src, array, manMode) {
-    let files = filterImages(manMode ? array : listFiles(src));
-    imgages.style.width = (files.length * 100) + '%';
-    img0.remove();
+    let files = manMode ? array : filterImages(listFiles(src)); //If manual-mode is enabled it gets the array otherwise it gets the files via filtered-listfiles function
+    imgages.style.width = (files.length * 100) + '%';           //Sets the images-container width to amount of passed images * 100%
+    img0.remove();                                              //Removes the test-image
     
-    for(i = 0; i < files.length; i++) {
-        img = document.createElement('img');
-        img.src = files[i];
-        img.setAttribute('alt', 'Image can\'t be displayed');
-        img.classList.add('img');
-        imgages.appendChild(img);
+    for(e of files) {                                           //Does something for every value of files  
+        img = document.createElement('img');                    //Creates new <img>-object
+        img.src = e;                                            //Sets current value as source of img
+        img.setAttribute('alt', 'Image can\'t be displayed');   //Sets alternative text if the file can't be displayed
+        img.classList.add('img');                               //Adds "img"-class to img
+        imgages.appendChild(img);                               //Adds img to images-container
     }
 
-    left.addEventListener('click', function() {
-        if(images.style.left == "0%") {
+    left.addEventListener('click', function() {                 //Adds eventlistener for click event of left-button
+        if(images.style.left == "0%") {                         
         }
-        else {
-            images.style.left = (parseInt(images.style.left.replace('%', '')) + 100) + '%';
+        else {                                                  //Otherwise
+            images.style.left = (parseInt(images.style.left.replace('%', '')) + 100) + '%'; //Gets the current value of distance, parses it to int adds 100% and sets it as new value
         }
     });
 
-    right.addEventListener('click', function() {
-        if(images.style.left == '-' + ((files.length - 1) * 100) + '%') {
+    right.addEventListener('click', function() {                //Adds eventlistener for click event of right-button
+        if(images.style.left == '-' + ((files.length - 1) * 100) + '%') {   //If the distance of images to the left side is already 100% * (amount of images - 1), does nothing
         }
-        else {
-            images.style.left = (images.style.left.replace('%', '') - 100) + '%';
+        else {                                                  //Otherwise
+            images.style.left = (images.style.left.replace('%', '') - 100) + '%';   //Gets the current value of distance, parses it to int substracts 100% and sets it as new value
         }
     });
 }
