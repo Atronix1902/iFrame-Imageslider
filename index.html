@@ -19,7 +19,8 @@
             const myParams = new URLSearchParams(window.location.search);
             const src = myParams.get('src') !=  null ? myParams.get('src') : null;
             const type = myParams.get('t') != null ? myParams.get('t') : '1';
-            const pics = myParams.get('pics') != null ? myParams.get('pics') : null;
+            const pics = myParams.get('pics') != null ? JSON.parse(myParams.get('pics')) : [];
+            const mode = myParams.get('pics') != null ? true : false;
             document.getElementById('style').setAttribute('href', './css/' + type + '.css');
         </script>
     </head>
@@ -36,6 +37,6 @@
     </body>
     <script src="./js/main.js"></script>
     <script>
-        initControl('./media/', [], false);
+        initControl('./media/', pics, mode);
     </script>
 </html>
