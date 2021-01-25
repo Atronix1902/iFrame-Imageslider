@@ -2,9 +2,13 @@
 
 <html>
     <head>
+        <!-- Meta Information -->
         <meta charset="UTF-8">
         <meta meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta id="description" name="description" content="Img-Slider">
+        <title id="sideTitle">Img-Slider</title>
         
+        <!-- Styling -->
         <link id="style" rel="stylesheet" type="text/css" href="./css/1.css"></link>
         <link rel="icon" type="image/jpeg" href="./media/icon.png">
         
@@ -13,30 +17,33 @@
         <link href="./css/fontawesome/all.css" type="text/css" rel="stylesheet">
         <link href="./css/fontawesome/v4-shims.css" type="text/css" rel="stylesheet">
         
-        <title id="sideTitle">Img-Slider</title>
-        <meta id="description" name="description" content="Img-Slider">
+        <!-- Setting up constances -->
         <script>
-            const myParams = new URLSearchParams(window.location.search);
-            const src = myParams.get('src') !=  null ? myParams.get('src') : null;
-            const type = myParams.get('t') != null ? myParams.get('t') : '1';
-            const pics = myParams.get('pics') != null ? JSON.parse(myParams.get('pics')) : [];
-            const mode = myParams.get('pics') != null ? true : false;
-            document.getElementById('style').setAttribute('href', './css/' + type + '.css');
+            const myParams = new URLSearchParams(window.location.search);                       //Gets header url and extracts query information
+            const src = myParams.get('src') !=  null ? myParams.get('src') : './media/';        //If src is given sets it as src-value else sets './media/' 
+            const type = myParams.get('t') != null ? myParams.get('t') : '1';                   //If t is given sets it as type-value else sets 1
+            const pics = myParams.get('pics') != null ? JSON.parse(myParams.get('pics')) : [];  //If pics is given parses it to array and sets it as pics-value else sets empty array
+            const mode = myParams.get('pics') != null ? true : false;                           //If pics is given sets mode to true else sets to false
+            document.getElementById('style').setAttribute('href', './css/' + type + '.css');    //Sets stylesheet to given type
         </script>
     </head>
     <body>
+        <!-- Image Container -->
         <div id="images">
             <img src="./media/test.png" id="img0" class="img">
         </div>
+        <!-- Overlay Container -->
         <div id="overlay">
+            <!-- Control Buttons -->
             <div id="move">
                 <i id="left" class="fas fa-angle-left clickable"></i>
                 <i id="right" class="fas fa-angle-right clickable"></i>
             </div>
         </div>
     </body>
+    <!-- Adding Scripts -->
     <script src="./js/main.js"></script>
     <script>
-        initControl('./media/', pics, mode);
+        initControl(src, pics, mode);   //Initialises Controls and Contents
     </script>
 </html>
