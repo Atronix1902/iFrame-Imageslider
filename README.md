@@ -23,9 +23,9 @@ But this option only provides support of using URL as filesource.
 This slider wouldn't show anything because he doesn't know which files, so we need to configure it
 The configuration is made by using a query-string:
 ```html
-<iframe height="900" width="1600" src="mp4/?src=./media/"></iframe>
+<iframe height="900" width="1600" src="img/?src=./media/"></iframe>
 ```
-This would create a slider for the files at "your_path_to_slider/mp4/media/" which is actually the default configuration.
+This would create a slider for the files at "your_path_to_slider/img/media/" which is actually the default configuration.
 
 There are several options to use.
 | Parameter | Type          | Description                                                                                                             | Default value         |
@@ -36,7 +36,7 @@ There are several options to use.
 
 Example of full configurated slider:
 ```html
-<iframe height="900" width="1600" src="mp4/?src=./media/"></iframe>
+<iframe height="900" width="1600" src="img/?src=./media/"></iframe>
 ```
 
 and would create following image-slider:
