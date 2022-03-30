@@ -15,7 +15,7 @@ This would create a clean slider:
 ```
 It's possible to use it via my website too:
 ```html
-<iframe height="900" width="1600" src="https://iframe/kriebel.ddnsfree.com/image/?src=<url to dir>">
+<iframe height="900" width="1600" src="https://iframe.kriebel.ddnsfree.com/image/?src=<url to dir>">
 ```
 But this option only provides support of using URL as filesource.
 
