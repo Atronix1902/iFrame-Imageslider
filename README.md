@@ -15,7 +15,7 @@ This would create a clean slider:
 ```
 It's possible to use it via my website too:
 ```html
-<iframe height="900" width="1600" src="https://kriebel.ddnsfree.com/mediaplayer/img/?src=<url to dir>">
+<iframe height="900" width="1600" src="https://iframe/kriebel.ddnsfree.com/image/?src=<url to dir>">
 ```
 But this option only provides support of using URL as filesource.
 
@@ -40,7 +40,7 @@ Example of full configurated slider:
 ```
 
 and would create following image-slider:
-![https://kriebel.ddnsfree.com/mediaplayer/img](https://kriebel.ddnsfree.com/media/images/other/img_screenshot.jpg)
+![https://iframe/kriebel.ddnsfree.com/image](https://kriebel.ddnsfree.com/media/images/other/img_screenshot.jpg)
 
 # Using JSONArray as source
 
