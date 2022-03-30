@@ -40,7 +40,7 @@ Example of full configurated slider:
 ```
 
 and would create following image-slider:
-![https://iframe/kriebel.ddnsfree.com/image](https://kriebel.ddnsfree.com/media/images/other/img_screenshot.jpg)
+![https://iframe.kriebel.ddnsfree.com/image](https://kriebel.ddnsfree.com/media/images/other/img_screenshot.jpg)
 
 # Using JSONArray as source
 
