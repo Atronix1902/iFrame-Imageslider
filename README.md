@@ -62,7 +62,12 @@ A simple example of this would be:
 
 # Enable Fullscreen for click on image
 
-If you use the HTML-Attribute 'allow="fullscreen"' it is possible to click on the image to show it on fullscreen
+If you use the HTML-Attribute `'allow="fullscreen"'` it is possible to click on the image to show it on fullscreen.
+
+Example:
+```html
+<iframe id="imgSlide" height="500px" width="100%" allow="fullscreen" src="https://iframe.kriebel.ddnsfree.com/image/"></iframe>
+```
 
 # Styling
 
