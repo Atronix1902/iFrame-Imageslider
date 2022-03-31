@@ -60,6 +60,10 @@ A simple example of this would be:
 </script>
 ```
 
+# Enable Fullscreen for click on image
+
+If you use the HTML-Attribute 'allow="fullscreen"' it is possible to click on the image to show it on fullscreen
+
 # Styling
 
 It is possible to create own CSS or edit the default.
