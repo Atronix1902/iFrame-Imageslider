@@ -1,7 +1,9 @@
-var imgages = document.getElementById('images');    //Container for images of the slider
+var images  = document.getElementById('images');    //Container for images of the slider
 var img0    = document.getElementById('img0');      //Test-picture
 var left    = document.getElementById('left');      //Left-Button
 var right   = document.getElementById('right');     //Right-Button
+var overlay = document.getElementById('overlay');   //Overlay
+var imag
 
 /**
  * @author AtronixYT
@@ -78,7 +80,7 @@ function filterImages(array) {
  */
 function initControl(src, array, manMode) {
     let files = manMode ? array : filterImages(listFiles(src)); //If manual-mode is enabled it gets the array otherwise it gets the files via filtered-listfiles function
-    imgages.style.width = (files.length * 100) + '%';           //Sets the images-container width to amount of passed images * 100%
+    images.style.width = (files.length * 100) + '%';           //Sets the images-container width to amount of passed images * 100%
     img0.remove();                                              //Removes the test-image
     
     for(e of files) {                                           //Does something for every value of files  
@@ -86,8 +88,25 @@ function initControl(src, array, manMode) {
         img.src = e;                                            //Sets current value as source of img
         img.setAttribute('alt', 'Image can\'t be displayed');   //Sets alternative text if the file can't be displayed
         img.classList.add('img');                               //Adds "img"-class to img
-        imgages.appendChild(img);                               //Adds img to images-container
+        images.appendChild(img);                               //Adds img to images-container
     }
+
+    overlay.addEventListener('click', function (event) {
+        index = images.style.left.replace('%', '').replace('-', '') / 100;
+        if(event.target === left || event.target === right) {
+            console.log('Clicked ' + event.target.id);
+        }
+
+        else {
+            console.log(index);
+            console.log(images.children[index]);
+            images.children[index].requestFullscreen().then((r) => console.log(r));
+        }
+    });
+
+    images.addEventListener('click', function (event) {
+        document.exitFullscreen().then(() => console.log('Exit Fullscreen'));
+    });
 
     left.addEventListener('click', function() {                 //Adds eventlistener for click event of left-button
         if(images.style.left == "0%") {                         
