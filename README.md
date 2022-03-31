@@ -62,7 +62,7 @@ A simple example of this would be:
 
 # Enable Fullscreen for click on image
 
-If you use the HTML-Attribute `'allow="fullscreen"'` it is possible to click on the image to show it on fullscreen.
+If you use the HTML-Attribute `allow="fullscreen"` it is possible to click on the image to show it on fullscreen.
 
 Example:
 ```html
