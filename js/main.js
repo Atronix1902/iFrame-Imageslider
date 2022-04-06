@@ -92,6 +92,10 @@ function initControl(src, array, manMode) {
         images.appendChild(img);                               //Adds img to images-container
     }
 
+    if (files.length <= 1) {
+        document.getElementById('move').hidden = true;
+    }
+
     overlay.addEventListener('click', function (event) {
         index = images.style.left.replace('%', '').replace('-', '') / 100;
         image = images.children[index];
