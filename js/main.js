@@ -1,7 +1,9 @@
-var imgages = document.getElementById('images');    //Container for images of the slider
-var img0    = document.getElementById('img0');      //Test-picture
-var left    = document.getElementById('left');      //Left-Button
-var right   = document.getElementById('right');     //Right-Button
+var images  = document.getElementById('images');   //Container for images of the slider
+var img0    = document.getElementById('img0');     //Test-picture
+var left    = document.getElementById('left');     //Left-Button
+var right   = document.getElementById('right');    //Right-Button
+var overlay = document.getElementById('overlay');  //Overlay
+var fsElem  = document.fullscreenElement;                   //Fullscreen Element
 
 /**
  * @author AtronixYT
@@ -78,16 +80,55 @@ function filterImages(array) {
  */
 function initControl(src, array, manMode) {
     let files = manMode ? array : filterImages(listFiles(src)); //If manual-mode is enabled it gets the array otherwise it gets the files via filtered-listfiles function
-    imgages.style.width = (files.length * 100) + '%';           //Sets the images-container width to amount of passed images * 100%
+    images.style.width = (files.length * 100) + '%';           //Sets the images-container width to amount of passed images * 100%
     img0.remove();                                              //Removes the test-image
     
-    for(e of files) {                                           //Does something for every value of files  
-        img = document.createElement('img');                    //Creates new <img>-object
+    for(e of files) {                                           //Does something for every value of files
+        img = document.createElement('img');            //Creates new <img>-object
+        img.id  = 'images-' + files.indexOf(e);
         img.src = e;                                            //Sets current value as source of img
         img.setAttribute('alt', 'Image can\'t be displayed');   //Sets alternative text if the file can't be displayed
         img.classList.add('img');                               //Adds "img"-class to img
-        imgages.appendChild(img);                               //Adds img to images-container
+        images.appendChild(img);                               //Adds img to images-container
     }
+
+    if (files.length <= 1) {
+        document.getElementById('move').hidden = true;
+    }
+
+    overlay.addEventListener('click', function (event) {
+        index = images.style.left.replace('%', '').replace('-', '') / 100;
+        image = images.children[index];
+
+        if(event.target === left || event.target === right) {
+            console.log('Clicked ' + event.target.id);
+        }
+
+        else {
+            image.requestFullscreen().then((r) => console.log(r));
+        }
+    });
+
+    document.addEventListener('fullscreenchange', (event) => {
+        console.log('fsElem:', fsElem);
+
+        if(document.fullscreen) {
+            console.log('Fullscreen entered');
+            fsElem = document.fullscreenElement;
+            fsElem.style.objectFit = 'contain';
+        }
+
+        else {
+            console.log('Fullscreen exited');
+            fsElem.style.removeProperty('object-fit');
+        }
+    });
+
+    images.addEventListener('click', function (event) {
+        document.exitFullscreen().then(() => {
+            console.log('Exit Fullscreen')
+        });
+    });
 
     left.addEventListener('click', function() {                 //Adds eventlistener for click event of left-button
         if(images.style.left == "0%") {                         
